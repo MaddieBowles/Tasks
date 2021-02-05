@@ -37,38 +37,38 @@ write.csv (beren3, 'beren_new.csv' , quote=F, row.names=FALSE)
 
 
 
-PART B
+#PART B
+
+setwd('C:\\Users\\maddi\\Desktop\\Evolution\\Tasks\\Task_02')
+beren3 <- read.csv("beren_new.csv", stringsAsFactors=F)
+
+#QUESTION 1: 
+#Assuming there are causative relationships between different variables in the data
+#when there might or might not be a correlation at all. 
 
 
-setwd(beren3)
-
-QUESTION 1: 
-Assuming there are causative relationships between different variables in the data
-when there might or might not be a correlation at all. 
-
-
-Feeds <- which(beren2$event == "bottle")
-avgMilk <- mean (beren2$value[Feeds])
+Feeds <- which(beren3$event == "bottle")
+avgMilk <- mean (beren3$value[Feeds])
 avgMilk
 
-Milk is in ounces 
-$value is used to grab/find a specific item in my data
-the brackets are used for a subset, so all of the Feeds data within the data 
+#Milk is in ounces 
+#$value is used to grab/find a specific item in my data
+#the brackets are used for a subset, so all of the Feeds data within the data 
 
 avgFeed <- tapply(beren3$value[Feeds], beren3$age[Feeds], mean)
 varFeed <- tapply(beren3$value[Feeds], beren3$age[Feeds], var)
 numFeeds <- tapply(beren3$value[Feeds], beren3$age[Feeds], length)
 totalFeeds <- tapply(beren3$value[Feeds], beren3$age[Feeds], sum)
 head(totalFeeds)
-numFeeds
-totalFeeds
+head(numFeeds)
+head(totalFeeds)
 
 cor(beren3$value[Feeds], beren3$age[Feeds])
 cor.test(beren3$value[Feeds], beren3$age[Feeds])
 # t= -3.28 , df = 161, p-value = 0.00125
 
 berenCor <- cor.test(beren3$value[Feeds], beren3$age[Feeds])
-summary(berenCor)
+berenCor
 
 berenANOVA <- aov(beren3$value[Feeds] ~ beren3$caregiver[Feeds])
 boxplot(beren3$value[Feeds] ~ beren3$caregiver[Feeds], xlab= "who gave the bottle", ylab= "amount of milk consumed (oz)"
@@ -90,13 +90,24 @@ And finally, the info was collected each day that varied, so I'm surprised to se
 
 
 
-BONUS
+#BONUS
 Naps <- which(beren3$event == "nap")
 Naps
+
 beren4 <- beren3[Naps, ]
-beren4
-StartTimeID <- apply(beren3, 1, function(x) paste(x[5:6], collapse='-'))
+head(beren4)
+
+startT <- beren4$start_minute + (beren4$start_hour)*60
+endT <- beren4$end_minute + (beren4$end_hour)*60
+napDuration <- endT - startT
+
+napsDay <- tapply(napDuration, beren4$age, mean)
+napsDay <- tapply(napDuration, beren4$age, length)
+
+StartTimeID <- apply(beren4, 1, function(x) paste(x[5:6], collapse=':'))
 StartTime <- as.POSIXlt(StartTimeID, format='%H:%M')
-EndTimeID <- apply(beren3, 1, function(x) paste(x[7:8], collapse='-'))
+EndTimeID <- apply(beren4, 1, function(x) paste(x[7:8], collapse=':'))
 EndTimeID <- as.POSIXlt(EndTimeID, format='%H:%M')
 beren3$time <- StartTimeID - EndTimeID
+
+# look here is a hypothesis
