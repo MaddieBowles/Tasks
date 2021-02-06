@@ -82,10 +82,10 @@ dev.off()
 
 source("http://jonsmitchell.com/code/plotFxn02b.R")
 
-QUESTION 2:
-First, I have no idea what the individual colors are grouped in. 
-Plus, the colors at the top do not correspond to the colors I'm seeing on the graph. 
-And finally, the info was collected each day that varied, so I'm surprised to see a linear relationship between total milk and time of day. 
+#QUESTION 2:
+#First, I have no idea what the individual colors are grouped in. 
+#Plus, the colors at the top do not correspond to the colors I'm seeing on the graph. 
+#And finally, the info was collected each day that varied, so I'm surprised to see a linear relationship between total milk and time of day. 
 
 
 
@@ -110,4 +110,7 @@ EndTimeID <- apply(beren4, 1, function(x) paste(x[7:8], collapse=':'))
 EndTimeID <- as.POSIXlt(EndTimeID, format='%H:%M')
 beren3$time <- StartTimeID - EndTimeID
 
-# look here is a hypothesis
+unique(beren3$event)
+
+
+# Beren's weight has increased over time
