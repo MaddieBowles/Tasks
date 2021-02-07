@@ -114,3 +114,22 @@ unique(beren3$event)
 
 
 # Beren's weight has increased over time
+
+
+#PART C
+
+Weight <- which(beren3$event == "trait_mass")
+head(Weight)
+beren5 <- beren3[Weight, ]
+head(beren5)
+cor(beren3$value[Weight] , beren3$age[Weight])
+cor.test(beren3$value[Weight], beren3$age[Weight])
+berenCor2 <- cor.test(beren3$value[Weight] , beren3$age[Weight])
+summary(berenCor2)
+berenANOVA2 <- aov(beren3$value[Weight] ~ beren3$age[Weight])
+berenANOVA2
+boxplot(beren3$value[Weight] ~ beren3$age[Weight], xlab = "Age" , ylab= "Weight (kg)")
+#the box plot was ugly, I was proud of her, but she wasn't good enough
+
+plot(beren3$age[Weight], beren3$value[Weight], pch=19, main="Beren's Weight Over The Time He's Been Alive", col="gray52", xlab="Age", ylab="Weight (kg)")
+abline(lm(beren3$value[Weight] ~ beren3$age[Weight]), col="orange", lwd=3)
