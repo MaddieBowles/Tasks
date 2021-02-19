@@ -7,6 +7,7 @@ population1 <- rnorm(1e6, trueMean1, trueSD1)
 trueMean2 <- 4
 trueSD2 <- 5
 population2 <- rnorm(1e6, trueMean2, trueSD2)
+
 Size <- 50
 Sample1 <- sample(population1, Size)
 Sample2 <- sample(population2, Size)
