@@ -1,0 +1,43 @@
+#MISCELLANEOUS STUFF FOR HYPOTHESIS
+
+
+Flu <- read.csv("flu.txt")
+phylo <- read.tree("TREE.nw") # phylogeny of influenza A(?)
+plot(tree)
+plot(tree, cex=0.5)
+plot(tree, cex=0.1)
+install.packages("RRphylo")
+
+
+library(phytools)
+
+
+
+#unique(Flu$mutations)
+#[1] ""          "H274Y"     "S31N"      "E627K"     "R292K"     "E119V"    
+#[7] "V27A S31N"
+#> tapply(Flu$mutations, Flu$mutations, length)
+#              E119V     E627K     H274Y     R292K      S31N V27A S31N 
+#     4620         9        46        17         2        86         1 
+#> Flu$date[1]
+#[1] "2010/11/19"
+#> strsplit(Flu$date[1])
+
+#> strsplit(Flu$date[1], "/")[[1]]
+#[1] "2010" "11"   "19"  
+#> DateMatrix <- sapply(Flu$date, function(x) strsplit(x, "/")[[1]])
+#> head(DateMatrix)
+#$`2010/11/19`
+#[1] "2010" "11"   "19"  
+
+
+
+MutationCounts <- tapply(Flu$mutations, Flu$mutations, length)
+Year <- sapply(Flu$date, function(x) strsplit(x, "/")[[1]][1])
+Month <- sapply(Flu$date, function(x) strsplit(x, "/")[[1]][2])
+Day <- sapply(Flu$date, function(x) strsplit(x, "/")[[1]][3])
+
+MutationByDate <- tapply(Flu$mutations, Year, function(x) length(unique(x)))
+
+
+Flu.B.USA <-read.csv("Influenza_B_Humans_USA.txt")

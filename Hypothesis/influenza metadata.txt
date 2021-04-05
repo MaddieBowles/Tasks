@@ -1,0 +1,110 @@
+setwd("C://Users//maddi//Desktop//Evolution//Tasks//Hypothesis")
+
+
+#diversitree= lamda = speciation rate
+setwd("C://Users//maddi//Desktop//Evolution//Tasks//Hypothesis")
+install.packages("diversitree")
+library("diversitree")
+library("ape")
+library(help=diversitree)
+Mexico.B.phylo <- read.tree("Mexico_B.nw")
+plot(Mexico.B.phylo)
+
+
+
+## Code for Speciation Rate
+
+# DR metric / inverse equal splits
+DRstat <- function(tree) {
+	
+	spRate <- function(sp, tree) {
+		#get branch lengths from root to tip
+		edges <- vector()
+		daughterNode <- match(sp, tree$tip.label)
+		while (daughterNode != (length(tree$tip.label) + 1)) {
+			parentNode <- tree$edge[which(tree$edge[,2] == daughterNode), 1]
+			edges <- c(edges, tree$edge.length[which(tree$edge[,1] == parentNode & tree$edge[,2] == daughterNode)])
+			daughterNode <- parentNode
+		}
+		
+		res <- sum(sapply(1:length(edges), function(x) edges[x] * (1/(2 ^ (x-1)))))
+		res <- res ^ (-1)
+		
+		return(res)
+	}
+	
+	rates <- unlist(lapply(tree$tip.label, function(x) spRate(x, tree)))
+	names(rates) <- tree$tip.label
+	
+	return(rates)
+}
+
+
+Mexico.B.sp <- mean(DRstat(Mexico.B.phylo))
+# 4.222765
+Mexico.B.sp <- boxplot(DRstat(Mexico.B.phylo))
+
+
+Mexico.A.phylo <- read.tree("Mexico_A.nw")
+plot(Mexico.A.phylo, cex=0.01)
+Mexico.A.sp <- mean(DRstat(Mexico.A.phylo))
+Mexico.A.sp
+#166.3072
+Mexico.A.sp <- boxplot(DRstat(Mexico.A.phylo))
+
+completeA <- boxplot(DRstat(Mexico.A.phylo, Canada.A.phylo, USA.A.phylo, USA.A.2010.phylo, USA.A.2015.phylo, USA.A.2020.phylo))
+
+
+Canada.A.phylo <- read.tree("Canada_A.nw")
+plot(Canada.A.phylo, cex=0.1)
+CanadaAsp <- mean(DRstat(Canada.A.phylo))
+CanadaAsp
+#363686.3
+
+Canada.B.phylo <- read.tree("Canada_B.nw")
+plot(Canada.B.phylo, cex=0.1)
+CanadaBsp <- mean(DRstat(Canada.B.phylo))
+CanadaBsp
+#28080262
+
+
+USA.A.phylo <- read.tree("USA_A_1900_2000.nw")
+plot(USA.A.phylo, cex=0.1)
+USAAsp <- mean(DRstat(USA.A.phylo))
+USAAsp
+#6.567677
+
+
+USA.A.2010.phylo <- read.tree("USA_A_2001_2010.nw")
+plot(USA.A.2010.phylo, cex=0.1)
+USA2010Asp <- mean(DRstat(USA.A.2010.phylo))
+USA2010Asp
+#1225.552
+
+USA.A.2015.phylo <- read.tree("USA_A_2011_2015.nw")
+plot(USA.A.2015.phylo, cex=0.1)
+USA2015Asp <- mean(DRstat(USA.A.2015.phylo))
+USA2015Asp
+#291.1361
+
+
+USA.A.2020.phylo <- read.tree("USA_A_2016_2020.nw")
+plot(USA.A.2020.phylo, cex=0.1)
+USA2020Asp <- mean(DRstat(USA.A.2020.phylo))
+USA2020Asp
+#126.3576
+
+
+USA.B.2010.phylo <- read.tree("USA_B_1900_2010.nw")
+plot(USA.B.2010.phylo, cex=0.1)
+USA2010Bsp <- mean(DRstat(USA.B.2010.phylo))
+USA2010Bsp
+#250.0505
+
+USA.B.2020.phylo <- read.tree("USA_B_2011_2020.nw")
+plot(USA.B.2020.phylo, cex=0.1)
+USA2020Bsp <- mean(DRstat(USA.B.2020.phylo))
+USA2020Bsp
+#1242.117
+
+completeboxplot <- boxplot(USA2010Asp, USA2015Asp, USA2020Asp, USAAsp, CanadaAsp, Mexico.A.Asp)
