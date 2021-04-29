@@ -1,0 +1,58 @@
+setwd("C:\\Users\\maddi\\Desktop\\Evolution\\Tasks")
+
+install.packages("diversitree")
+library(diversitree)
+
+
+transition_0to1 <- 0.1
+transition_1to0 <- 0.1
+speciation_0 <- 0.2
+extinction_0 <- 0.1
+speciation_1 <- 0.2
+extinction_1 <- 0.1
+maxN <- 1e3
+maxT <- 50
+Pars <- c(speciation_0, speciation_1, extinction_0, extinction_1, transition_0to1, transition_1to0)
+simTree <- tree.bisse(Pars, max.taxa = maxN, max.t = maxT)
+str(simTree)
+
+?tree.bisse
+stateTable <- table(simTree$tip.state)
+a <- stateTable / sum(stateTable)
+
+plot(simTree, cex=0.01)
+
+
+#Plot 2
+simTree2 <- tree.bisse(Pars, max.taxa = maxN, max.t = maxT)
+str(simTree2)
+plot(simTree2, cex=0.1)
+stateTable2 <- table(simTree2$tip.state)
+b <- stateTable2 / sum(stateTable2)
+
+#Plot 3
+simTree3 <- tree.bisse(Pars, max.taxa = maxN, max.t = maxT)
+str(simTree3)
+plot(simTree3, cex=0.1)
+stateTable3 <- table(simTree3$tip.state)
+c <- stateTable3 / sum(stateTable3)
+
+
+#Plot 4
+simTree4 <- tree.bisse(Pars, max.taxa = maxN, max.t = maxT)
+str(simTree4)
+plot(simTree4, cex=0.1)
+stateTable4 <- table(simTree4$tip.state)
+d <- stateTable4 / sum(stateTable4)
+
+#Plot 5
+simTree5 <- tree.bisse(Pars, max.taxa = maxN, max.t = maxT)
+str(simTree5)
+plot(simTree5, cex=0.1)
+stateTable5 <- table(simTree5$tip.state)
+e <- stateTable5 / sum(stateTable5)
+
+plot(c(a, b, c, d, e))
+abline(lm)
+
+
