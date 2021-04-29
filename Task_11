@@ -1,0 +1,44 @@
+setwd("C:\\Users\\maddi\\Desktop\\Evolution\\Tasks")
+
+
+?runif
+?rnorm
+x <- rnorm(100, mean=5, sd=2)
+y <- (((x * 5) + 2) + runif(100, min=0, max=0.1))
+
+plot(x, y)
+#Slope(x, y)
+lm(x~y)
+# y-intercept at -0.41
+# rise over run approximately 0.2
+
+#Even though we generated 100 random numbers they still have to resemble each other 
+#relatively closely to generate a mean of 5, and only deviate by 2. So for example x can go up
+#to 12 with deviation. Then, everytime x goes up we've made it relationally similar it that 
+# y also goes up because it is always multiplied by 5, added by 2, and then add something in between 0.1 and 0. 
+#So, it goes make sense they would be related in a positive correlation. 
+
+
+{
+z[[var]] <- mean(y*as.numeric(x[100]))
+for(var in 1:100)
+z <- runif(1)
+y= (((x * z) +2) + runif(100, min=0, max=0.1))
+}
+print({
+z[[var]] <- mean(y*as.numeric(x[100]))
+z <- runif(1)
+y = (((x*z)+2) + runif(100, min =0, max =0.1))
+})
+
+install.packages("meme")
+library(meme)
+u2 <- "https://memegenerator.net/img/images/600x600/10791247/homer-bush.jpg"
+meme(u2, "the last 5 students", "when they hear SEI is due this week")
+
+
+u3 <- "https://i.imgflip.com/32gpff.jpg"
+meme(u3, "Dr. Mitchell answering anything about evolution:", color="black", font= "Helvetica", size= 2)
+
+
+?meme
